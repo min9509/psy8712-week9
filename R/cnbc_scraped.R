@@ -51,7 +51,34 @@ ggplot(cnbc_tbl, aes(x = source, y = length, fill = source)) +
 #### Analysis #### 
 # Runs an ANOVA to get F-value and p-value (using summary to get ANOVA table)
 aov_result <- aov(length ~ source, data = cnbc_tbl)
-summary(aov_result)
+aov_table <- summary(aov_result)
+aov_table
 
-?anova()
-?aov()
+#### Publication #### 
+# Extract F-value, degrees of freedom, and p-value from the ANOVA table
+F_value <- aov_table[[1]]$"F value"[1]
+dfn <- aov_table[[1]]$Df[1]
+dfd <- aov_table[[1]]$Df[2]
+p_value <- aov_table[[1]]$"Pr(>F)"[1]
+significant <- ifelse(p_value < 0.05, "was", "was not")
+
+F_value
+dfn
+dfd
+p_value
+
+# Format the F-statistic, degrees of freedom, and p-value by using sprintf
+formatted_F <- sprintf("%.2f", F_value)
+formatted_df <- sprintf("%.0f", dfn)
+formatted_dfd <- sprintf("%.0f", dfd)
+formatted_p <- sprintf("%.2f", p_value)
+
+formatted_F
+formatted_df
+formatted_dfd
+formatted_p
+
+# Output the results in the desired format by using sprintf
+sprintf("The results of an ANOVA comparing lengths across sources was F(%s, %s) = %s, p = %s. This test %s statistically significant.",
+                  formatted_df, formatted_dfd, formatted_F, formatted_p, significant)
+
