@@ -26,8 +26,18 @@ ggplot(rstats_tbl, aes(x = upvotes, y = comments)) +
 #### Analysis #### 
 # Analyze the correlation coefficient and p-value by using cor.test
 cor_test <- cor.test(rstats_tbl$upvotes, rstats_tbl$comments)
-cor_test_coefficient <- cor_test$estimate
-cor_test_p <- cor_test$p.value
-cor_test
-cor_test_coefficient
-cor_test_p
+cor_test$estimate
+cor_test$p.value
+
+#### Publication #### 
+# "The correlation between upvotes and comments was r(23) = 0.2, p = 0.34. This test was not statistically significant."
+
+# For publication, prepare df, cor, p, and sig by using $, round, ifelse
+df <- cor_test$parameter
+cor <- round(cor_test$estimate, 2)
+p <- round(cor_test$p.value, 2)
+sig <- ifelse(cor_test$p.value < 0.05, "was", "was not")
+
+# Output the results in the desired format by using sprintf
+sprintf("The correlation between upvotes and comments was r(%d) = %s, p = %s. This test %s statistically significant.",
+                       df, cor, p, sig)
