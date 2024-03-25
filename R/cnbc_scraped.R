@@ -39,4 +39,11 @@ for (source in names(cnbc_html)) {
   cnbc_tbl <- bind_rows(cnbc_tbl, variables_tbl)
 }
 
+cnbc_tbl
+
+#### Visualization #### 
+# Visualize
+ggplot(cnbc_tbl, aes(x = source, y = length, fill = source)) +
+  geom_bar(stat = "identity") + 
+  labs(x = "Section", y = "Number of Length", title = "Bar Plot of Headline Length by Source") 
 
