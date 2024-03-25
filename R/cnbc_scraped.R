@@ -39,11 +39,19 @@ for (source in names(cnbc_html)) {
   cnbc_tbl <- bind_rows(cnbc_tbl, variables_tbl)
 }
 
+# Checking the results
 cnbc_tbl
 
 #### Visualization #### 
-# Visualize
+# Visualize the relationship between source and length
 ggplot(cnbc_tbl, aes(x = source, y = length, fill = source)) +
   geom_bar(stat = "identity") + 
   labs(x = "Section", y = "Number of Length", title = "Bar Plot of Headline Length by Source") 
 
+#### Analysis #### 
+# Runs an ANOVA to get F-value and p-value (using summary to get ANOVA table)
+aov_result <- aov(length ~ source, data = cnbc_tbl)
+summary(aov_result)
+
+?anova()
+?aov()
